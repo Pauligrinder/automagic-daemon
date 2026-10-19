@@ -200,10 +200,7 @@ func Action_dbus_method(runID string, e *Engine, a Action, vars map[string]inter
     log.Printf("[%s] Action_dbus_method - connect error: %v", runID, err)
     return err
   }
-
-  if a.Address != "system" && a.Address != "session" {
-    defer conn.Close()
-  }
+  defer conn.Close()
 
   obj := conn.Object(a.Destination, dbus.ObjectPath(a.Path))
   ctx, cancel := context.WithTimeout(context.Background(), timeout)
